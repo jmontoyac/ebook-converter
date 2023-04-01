@@ -1,6 +1,7 @@
 import argparse
 
 def parse_arguments(arguments):
+    print(f'Arguments: {arguments}')
     parser = argparse.ArgumentParser(description=
                                      'ebook file format converter'
                                      )

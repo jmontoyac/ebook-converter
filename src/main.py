@@ -1,6 +1,7 @@
 import sys
 import logging
 from utils.argparser import *
+from core.read_files.read_input_file import *
 
 
 SUCCESSFUL_RUN = 0
@@ -18,8 +19,11 @@ def main(arguments) -> bool:
     result = True
     try:
         args = vars(parse_arguments(arguments))
-        
         print(f'Args: {args}')
+        
+        # Open pdf file
+        read_file(args['input_file'])
+        
     except argparse.ArgumentError as error:
         print(f'Error: {error}')
         result = False
