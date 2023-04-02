@@ -22,7 +22,8 @@ def main(arguments) -> bool:
         print(f'Args: {args}')
         
         # Open pdf file
-        read_file(args['input_file'])
+        #read_file(args['input_file'])
+        get_images(args['input_file'])
         
     except argparse.ArgumentError as error:
         print(f'Error: {error}')

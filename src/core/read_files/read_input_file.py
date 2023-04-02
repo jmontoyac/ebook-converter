@@ -10,6 +10,17 @@ def visitor_body(text, cm, tm, fontDict, fontSize):
     y = tm[5]
     if y > 50 and y < 572:
         parts.append(text)
+        
+def get_images(file_name):
+    reader = PyPDF2.PdfReader(INPUT_FILES_PATH + '/' + file_name)
+    
+    page = reader.pages[0]
+    count = 0
+    
+    for image_file_object in page.images:
+        with open(str(count) + image_file_object.name,'wb') as fp:
+            fp.write(image_file_object.data)
+            count += 1
 
 def read_file(file_name: str):
     files = os.listdir(INPUT_FILES_PATH)
