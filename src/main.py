@@ -1,7 +1,10 @@
+'''
+'''
 import sys
 import logging
-from utils.argparser import *
-from core.read_files.read_input_file import *
+from utils.argparser import parse_arguments
+from utils.argparser import argparse
+from core.read_files.read_input_file import get_images, read_file
 
 
 SUCCESSFUL_RUN = 0
@@ -10,21 +13,29 @@ LOGGER_FORMAT_STRING = (
     '%(asctime)s [%(levelname)-5s] [%(filename)s]-[%(lineno)-3d] %(message)s'
 )
 logging.basicConfig(
-    level=logging.INFO, format=LOGGER_FORMAT_STRING, datefmt='%m/%d/%Y %I:%M:%S %p'
+    level=logging.INFO, format=LOGGER_FORMAT_STRING,
+    datefmt='%m/%d/%Y %I:%M:%S %p'
 )
 logger = logging.getLogger(__file__)
 
 
 def main(arguments) -> bool:
+    '''
+    Main function to process pdf file
+    Args:
+        arguments: Command line arguments
+    Return:
+        result (bool): Execution result
+    '''
     result = True
     try:
         args = vars(parse_arguments(arguments))
         print(f'Args: {args}')
-        
+
         # Open pdf file
-        #read_file(args['input_file'])
+        read_file(args['input_file'])
         get_images(args['input_file'])
-        
+
     except argparse.ArgumentError as error:
         print(f'Error: {error}')
         result = False

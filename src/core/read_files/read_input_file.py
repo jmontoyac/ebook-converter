@@ -6,32 +6,44 @@ INPUT_FILES_PATH = 'input_files'
 
 parts = []
 
+
 def visitor_body(text, cm, tm, fontDict, fontSize):
+    '''
+    TODO add doc string
+    '''
     y = tm[5]
     if y > 50 and y < 572:
         parts.append(text)
-        
-def get_images(file_name):
-    reader = PyPDF2.PdfReader(INPUT_FILES_PATH + '/' + file_name)
-    
+
+
+def get_images(file_name: str):
+    '''
+    TODO add doc string
+    '''
+    reader = PyPDF2.PdfReader(f'{INPUT_FILES_PATH}/{file_name}')
+
     page = reader.pages[0]
     count = 0
-    
+
     for image_file_object in page.images:
-        with open(str(count) + image_file_object.name,'wb') as fp:
+        with open(str(count) + image_file_object.name, 'wb') as fp:
             fp.write(image_file_object.data)
             count += 1
 
+
 def read_file(file_name: str):
+    '''
+    TODO add doc string
+    '''
     files = os.listdir(INPUT_FILES_PATH)
     print('Files in directory: ', files)
-    reader = PyPDF2.PdfReader(INPUT_FILES_PATH + '/' + file_name)
+    reader = PyPDF2.PdfReader(f'{INPUT_FILES_PATH}/{file_name}')
     pages = len(reader.pages)
     print(f'Pages: {pages}')
     pprint(f'Metadata: {reader.metadata}')
     for i in range(14):
         read_page = reader.pages[i].extract_text(visitor_text=visitor_body)
-        # print(f'--------Text form page {i}: {read_page}')
+        print(f'--------Text from page {i}: {read_page}')
         text_body = ''.join(parts)
     print(f'Text body: {text_body}')
         
