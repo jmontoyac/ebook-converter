@@ -1,22 +1,14 @@
 '''
 '''
 import sys
-import logging
 from utils.argparser import parse_arguments
 from utils.argparser import argparse
+from utils.log import logger
 from core.read_files.read_input_file import get_images, read_file
 
 
 SUCCESSFUL_RUN = 0
 FAILED_RUN = 1
-LOGGER_FORMAT_STRING = (
-    '%(asctime)s [%(levelname)-5s] [%(filename)s]-[%(lineno)-3d] %(message)s'
-)
-logging.basicConfig(
-    level=logging.INFO, format=LOGGER_FORMAT_STRING,
-    datefmt='%m/%d/%Y %I:%M:%S %p'
-)
-logger = logging.getLogger(__file__)
 
 
 def main(arguments) -> bool:
@@ -38,6 +30,7 @@ def main(arguments) -> bool:
 
     except argparse.ArgumentError as error:
         print(f'Error: {error}')
+        logger.error('Error: %s', error)
         result = False
     return result
 

@@ -1,6 +1,8 @@
 import PyPDF2
 import os
 from pprint import pprint
+from utils.log import logger
+
 
 INPUT_FILES_PATH = 'input_files'
 
@@ -43,10 +45,16 @@ def read_file(file_name: str):
     pprint(f'Metadata: {reader.metadata}')
     for i in range(14):
         read_page = reader.pages[i].extract_text(visitor_text=visitor_body)
-        print(f'--------Text from page {i}: {read_page}')
+        # print(f'--------Text from page {i}: {read_page}')
         text_body = ''.join(parts)
     print(f'Text body: {text_body}')
-        
+    try:
+        temp_file = file_name.replace('.pdf', '.txt')
+        with open(temp_file, 'w', encoding='utf-8') as file:
+            file.write(text_body)
+    except IOError as error:
+        logger.error('Error: %s', error)
+
     # Loop through files in input_files directory
     # for file in files:
     #     if file.endswith('pdf'):
